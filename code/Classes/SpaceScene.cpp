@@ -1,5 +1,5 @@
 #include "SpaceScene.h"
-#include "BasicObject.h"
+#include "PlayerShip.h"
 
 USING_NS_CC;
 
@@ -25,14 +25,12 @@ bool SpaceScene::init()
     {
         return false;
     }
-/*
+
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("attack_drone_1_1.plist");
-	auto sp = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("attack_drone_1_1_0.png"));
-	sp->setNormalizedPosition(ccp(.5f, .5f));
-	addChild(sp);
-    */
-	auto obj = new BasicObject();
-	log("%s", obj->getGuid());
+
+	auto ship = PlayerShip::create();
+	ship->setNormalizedPosition(ccp(.5f, .5f));
+	addChild(ship);
 
     return true;
 }
