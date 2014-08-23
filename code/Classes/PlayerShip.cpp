@@ -26,7 +26,7 @@ bool PlayerShip::init()
 {
 	if(Ship::init())
 	{
-		setSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("attack_drone_1_1_0.png"));
+		setSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("attack_drone_3_1_0.png"));
 		return true;
 	}
 	return false;

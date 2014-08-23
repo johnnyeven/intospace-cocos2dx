@@ -2,6 +2,7 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include "BasicObject.h"
 
 class SpaceScene : public cocos2d::Layer
 {
@@ -14,6 +15,8 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(SpaceScene);
+    
+    void focusOn(BasicObject *obj);
 };
 
 #endif // __HELLOWORLD_SCENE_H__

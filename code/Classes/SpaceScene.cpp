@@ -1,5 +1,6 @@
 #include "SpaceScene.h"
 #include "PlayerShip.h"
+#include "Camera.h"
 
 USING_NS_CC;
 
@@ -10,6 +11,7 @@ Scene* SpaceScene::createScene()
     
     // 'layer' is an autorelease object
     auto layer = SpaceScene::create();
+    SceneCamera::getInstance()->setScene(layer);
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -26,11 +28,20 @@ bool SpaceScene::init()
         return false;
     }
 
-	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("attack_drone_1_1.plist");
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("attack_drone_3_1.plist");
 
 	auto ship = PlayerShip::create();
-	ship->setNormalizedPosition(ccp(.5f, .5f));
 	addChild(ship);
+    
+    focusOn(ship);
 
     return true;
+}
+
+void SpaceScene::focusOn(BasicObject *obj)
+{
+    if (obj)
+    {
+        obj->setNormalizedPosition(ccp(.5f, .5f));
+    }
 }

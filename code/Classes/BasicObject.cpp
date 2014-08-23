@@ -3,7 +3,7 @@
 
 BasicObject::BasicObject(void)
 {
-	guid = PZGuidMaker::newGUID();
+	guid = PZGuidMaker::CreateGuidString().c_str();
 }
 
 
