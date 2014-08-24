@@ -12,7 +12,7 @@ public:
 	virtual bool init();
     virtual void update(double delta);
     
-    void setTargetDirection(float);
+    void setTargetDirection(float x, float y);
 private:
 	PlayerShip(void);
 	~PlayerShip(void);

@@ -10,7 +10,8 @@
 
 PlayerBehavior::PlayerBehavior():Behavior()
 {
-    _targetDegrees = 0;
+    _currentDirection = new Vec2(1, 0);
+    _targetDirection = new Vec2(1, 0);
     _turnSpeed = 0;
 }
 PlayerBehavior::~PlayerBehavior()
@@ -20,24 +21,29 @@ PlayerBehavior::~PlayerBehavior()
 void PlayerBehavior::update(double delta)
 {
     Behavior::update(delta);
-    double _d = _target->getDirection();
-    double offset = fabs(_d - _targetDegrees);
-    if (offset < 1.f)
+    
+    float a = CC_RADIANS_TO_DEGREES(_targetDirection->getAngle(*_currentDirection));
+    //log("%f", a);
+    if(abs(a) < .5f)
     {
-        _target->setDirection(_targetDegrees);
+        _currentDirection->x = _targetDirection->x;
+        _currentDirection->y = _targetDirection->y;
         return;
     }
-    if(_targetDegrees > _d)
+    float offset = CC_DEGREES_TO_RADIANS(_turnSpeed * delta);
+    if(a < 0)
     {
-        //逆时针转
-        _d += _turnSpeed * delta;
+        //逆时针
+        _currentDirection->rotate(Vec2(0, 0), offset);
+        //log("逆时针 %f", CC_RADIANS_TO_DEGREES(_currentDirection->getAngle()));
     }
-    else if(_targetDegrees < _d)
+    else if(a > 0)
     {
-        _d -= _turnSpeed * delta;
+        //顺时针
+        _currentDirection->rotate(Vec2(0, 0), -offset);
+        //log("顺时针 %f", CC_RADIANS_TO_DEGREES(_currentDirection->getAngle()));
     }
-    
-    _target->setDirection(_d);
+    _target->setDirection(CC_RADIANS_TO_DEGREES(_currentDirection->getAngle()));
 }
 
 void PlayerBehavior::setTurnSpeed(float speed)
@@ -63,14 +69,15 @@ PlayerShip* PlayerBehavior::getTarget()
     return _target;
 }
 
-void PlayerBehavior::setTargetDegrees(float degrees)
+void PlayerBehavior::setTargetDirection(float x, float y)
 {
-    _targetDegrees = degrees;
+    _targetDirection->x = x;
+    _targetDirection->y = y;
 }
 
-float PlayerBehavior::getTargetDegrees()
+Vec2* PlayerBehavior::getTargetDirection()
 {
-    return _targetDegrees;
+    return _targetDirection;
 }
 
 void PlayerBehavior::installListener()

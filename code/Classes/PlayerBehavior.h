@@ -26,13 +26,14 @@ public:
     
     void setTurnSpeed(float);
     float getTurnSpeed();
-    void setTargetDegrees(float);
-    float getTargetDegrees();
+    void setTargetDirection(float x, float y);
+    Vec2* getTargetDirection();
     void setTarget(PlayerShip*);
     PlayerShip* getTarget();
 private:
     PlayerShip *_target;
-    float _targetDegrees;   //要转向的角度
+    Vec2* _currentDirection;
+    Vec2* _targetDirection;
     float _turnSpeed;       //转向速度
 };
 

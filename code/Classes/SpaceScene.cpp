@@ -58,10 +58,10 @@ bool SpaceScene::onTouchBegan(Touch *touch, Event *event)
     if(_player)
     {
         Vec2 pPlayer = _player->getPosition();
-        float angle = CC_RADIANS_TO_DEGREES(atan2f(pTouch.y - pPlayer.y, pTouch.x - pPlayer.x));
+//        float angle = CC_RADIANS_TO_DEGREES(atan2f(pTouch.y - pPlayer.y, pTouch.x - pPlayer.x));
         
-        _player->setTargetDirection(angle);
-        log("%f", angle);
+        _player->setTargetDirection(pTouch.x - pPlayer.x, pTouch.y - pPlayer.y);
+//        log("%f", angle);
     }
     return true;
 }

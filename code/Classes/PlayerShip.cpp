@@ -51,7 +51,7 @@ void PlayerShip::update(double delta)
     setSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(StringUtils::format("attack_drone_3_1_%i.png", index)));
 }
 
-void PlayerShip::setTargetDirection(float direction)
+void PlayerShip::setTargetDirection(float x, float y)
 {
-    _behavior->setTargetDegrees(direction);
+    _behavior->setTargetDirection(x, y);
 }
