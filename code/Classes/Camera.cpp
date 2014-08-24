@@ -34,3 +34,14 @@ void SceneCamera::setScene(SpaceScene *scene)
         _scene = scene;
     }
 }
+
+void SceneCamera::focusOn(BasicObject *obj)
+{
+    if(obj)
+    {
+        obj->setFocused(true);
+        _focus = obj;
+        
+        obj->setNormalizedPosition(ccp(.5f, .5f));
+    }
+}

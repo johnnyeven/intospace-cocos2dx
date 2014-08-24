@@ -21,6 +21,7 @@ public:
     static SceneCamera* getInstance();
     
     void setScene(SpaceScene* scene);
+    void focusOn(BasicObject *obj);
 private:
     SceneCamera(void);
     ~SceneCamera(void);

@@ -27,21 +27,49 @@ bool SpaceScene::init()
     {
         return false;
     }
+    
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->onTouchBegan = CC_CALLBACK_2(SpaceScene::onTouchBegan, this);
+    listener->setSwallowTouches(true);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("attack_drone_3_1.plist");
 
 	auto ship = PlayerShip::create();
 	addChild(ship);
     
-    focusOn(ship);
+    _player = ship;
+    
+    SceneCamera::getInstance()->focusOn(ship);
 
     return true;
 }
 
-void SpaceScene::focusOn(BasicObject *obj)
+void SpaceScene::onEnter()
 {
-    if (obj)
+    Layer::onEnter();
+    scheduleUpdate();
+}
+
+bool SpaceScene::onTouchBegan(Touch *touch, Event *event)
+{
+    Vec2 pTouch = touch->getLocation();
+    
+    if(_player)
     {
-        obj->setNormalizedPosition(ccp(.5f, .5f));
+        Vec2 pPlayer = _player->getPosition();
+        float angle = CC_RADIANS_TO_DEGREES(atan2f(pTouch.y - pPlayer.y, pTouch.x - pPlayer.x));
+        
+        _player->setTargetDirection(angle);
+        log("%f", angle);
+    }
+    return true;
+}
+
+void SpaceScene::update(float delta)
+{
+    if(_player)
+    {
+        _player->update(delta);
     }
 }
