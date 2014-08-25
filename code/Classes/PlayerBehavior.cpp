@@ -24,7 +24,7 @@ void PlayerBehavior::update(double delta)
     
     float a = CC_RADIANS_TO_DEGREES(_targetDirection->getAngle(*_currentDirection));
     //log("%f", a);
-    if(abs(a) < .5f)
+    if(abs(a) < 1.f)
     {
         _currentDirection->x = _targetDirection->x;
         _currentDirection->y = _targetDirection->y;

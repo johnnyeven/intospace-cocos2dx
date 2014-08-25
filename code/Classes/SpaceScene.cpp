@@ -33,6 +33,12 @@ bool SpaceScene::init()
     listener->setSwallowTouches(true);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
+	//Create background
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("images/maps/A-1-2.plist");
+	auto bg = Sprite::createWithSpriteFrameName("A-1-2.png");
+	bg->setAnchorPoint(Vec2(0.f, 0.f));
+	addChild(bg);
+
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("attack_drone_3_1.plist");
 
 	auto ship = PlayerShip::create();

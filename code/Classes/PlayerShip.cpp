@@ -4,7 +4,7 @@
 PlayerShip::PlayerShip(void):Ship()
 {
     PlayerBehavior *b = new PlayerBehavior();
-    b->setTurnSpeed(120.f);
+    b->setTurnSpeed(240.f);
     b->setTarget(this);
     _behavior = b;
 }
