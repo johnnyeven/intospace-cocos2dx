@@ -4,6 +4,8 @@
 
 int GlobalConfig::scene_width = 960;
 int GlobalConfig::scene_height = 640;
+int GlobalConfig::block_width = INT32_MAX - INT16_MAX;
+int GlobalConfig::block_height = INT32_MAX - INT16_MAX;
 
 USING_NS_CC;
 

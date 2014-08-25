@@ -55,7 +55,7 @@ void SpaceStarRender::update(double delta)
 	int size = _displayContainer.size();
 	for(int i = 0; i < size; ++i)
 	{
-		float percent = 1 / (_deepContainer[i] + 1);
+		float percent = 1.f / (_deepContainer[i] + 1);
 		auto _layer = _container->getChildByTag(_deepContainer[i]);
 		auto _child = _displayContainer.at(i);
 		Vec2 current = _child->getPosition();
@@ -63,6 +63,14 @@ void SpaceStarRender::update(double delta)
 		if(point.x > GlobalConfig::scene_width || point.x < 0 || point.y > GlobalConfig::scene_height || point.y < 0)
 		{
 			_layer->removeChild(_child);
+            
+            Vector<Sprite*>::iterator it = _displayContainer.begin() + i;
+            _displayContainer.erase(it);
+            
+            std::vector<int>::iterator it1 = _deepContainer.begin() + i;
+            _deepContainer.erase(it1);
+            
+            --size;
 		}
 		else
 		{

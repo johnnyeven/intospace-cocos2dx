@@ -87,6 +87,8 @@ void SpaceScene::update(float delta)
 	{
 		_renders.at(i)->update(delta);
 	}
+    
+    SceneCamera::getInstance()->update(delta);
 }
 
 void SpaceScene::addRender(IRender* render)

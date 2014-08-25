@@ -19,16 +19,31 @@ class SceneCamera
 {
 public:
     static SceneCamera* getInstance();
-    
+    void setStart(float x, float y);
+    Vec2& getCenter() { return _center; };
+    void setCenter(float x, float y);
+    float getViewStartX();
+    float getViewStartY();
+    float getCutViewStartX();
+    float getCutViewStartY();
     void setScene(SpaceScene* scene);
     void focusOn(BasicObject *obj);
+    Rect& getCameraView();
+    Rect& getCameraCutView();
+    void update(double delta);
 private:
     SceneCamera(void);
     ~SceneCamera(void);
     
     static SceneCamera* _instance;
     
-    Rect* _cameraView;
+    Vec2 _start;
+    Vec2 _prevBlock;
+    Vec2 _block;
+    Vec2 _prevCenter;
+    Vec2 _center;
+    Rect _cameraView;
+    Rect _cameraCutView;
     double _x;
     double _y;
     BasicObject* _focus;
