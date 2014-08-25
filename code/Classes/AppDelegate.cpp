@@ -1,5 +1,9 @@
 #include "AppDelegate.h"
 #include "SpaceScene.h"
+#include "GlobalConfig.h"
+
+int GlobalConfig::scene_width = 960;
+int GlobalConfig::scene_height = 640;
 
 USING_NS_CC;
 
@@ -21,6 +25,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		glview->setFrameSize(960, 640);
 #endif
         director->setOpenGLView(glview);
+
+		Size frameSize = glview->getFrameSize();
+		GlobalConfig::scene_width = frameSize.width;
+		GlobalConfig::scene_height = frameSize.height;
     }
 
     // turn on display FPS

@@ -1,9 +1,9 @@
 #include "SpaceScene.h"
 #include "PlayerShip.h"
 #include "Camera.h"
+#include "Render/SpaceStarRender.h"
 
 USING_NS_CC;
-
 Scene* SpaceScene::createScene()
 {
     // 'scene' is an autorelease object
@@ -48,6 +48,9 @@ bool SpaceScene::init()
     
     SceneCamera::getInstance()->focusOn(ship);
 
+	_renders = std::vector<IRender*>();
+	addRender(new SpaceStarRender());
+
     return true;
 }
 
@@ -78,4 +81,16 @@ void SpaceScene::update(float delta)
     {
         _player->update(delta);
     }
+
+	int size = _renders.size();
+	for(int i = 0; i < size; i++)
+	{
+		_renders.at(i)->update(delta);
+	}
+}
+
+void SpaceScene::addRender(IRender* render)
+{
+	render->setTarget(this);
+	_renders.push_back(render);
 }

@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "BasicObject.h"
 #include "PlayerShip.h"
+#include "Render/IRender.h"
 
 class SpaceScene : public cocos2d::Layer
 {
@@ -15,14 +16,16 @@ public:
     virtual bool init();
     virtual void onEnter();
     virtual void update(float delta);
-    
     virtual bool onTouchBegan(Touch *touch, Event *event);
     
     // implement the "static create()" method manually
     CREATE_FUNC(SpaceScene);
+
+	void addRender(IRender*);
     
 private:
     PlayerShip* _player;
+	std::vector<IRender*> _renders;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
