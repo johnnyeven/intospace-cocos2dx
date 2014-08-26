@@ -42,7 +42,7 @@ void SpaceStarRender::update(double delta)
 		int index = rand() % 5;
 		auto _layer = _container->getChildByTag(index);
 		//auto _star = Sprite::createWithSpriteFrame(_frame);
-		auto _star = Sprite::create("stars.png");
+		auto _star = Sprite::create("images/maps/stars.png");
 		int _x = rand() % GlobalConfig::scene_width;
 		int _y = rand() % GlobalConfig::scene_height;
 		_star->setPosition(_x, _y);

@@ -38,6 +38,10 @@ bool SpaceScene::init()
 	auto bg = Sprite::createWithSpriteFrameName("A-1-2.png");
 	bg->setAnchorPoint(Vec2(0.f, 0.f));
 	addChild(bg);
+    
+    auto station = Sprite::create("images/stations/space_station_blue.png");
+    station->setAnchorPoint(Vec2(0.f, 0.f));
+    addChild(station);
 
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("attack_drone_3_1.plist");
 
