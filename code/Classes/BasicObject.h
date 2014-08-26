@@ -13,12 +13,13 @@ class BasicObject :
 public:
 	const char* getGuid();
 	void setBlock(int x, int y);
-	void setWorldPosition(float x, float y);
-    float getWorldPositionX()
+	Vec2 getBlock() { return Vec2(_blockX, _blockY); };
+	void setWorldPosition(double x, double y);
+    double getWorldPositionX()
     {
         return _positionX;
     };
-    float getWorldPositionY()
+    double getWorldPositionY()
     {
         return _positionY;
     };
@@ -31,8 +32,8 @@ private:
 
 	int _blockX;				//«¯øÈX
 	int _blockY;				//«¯øÈY
-	float _positionX;				//‘⁄µ±«∞«¯øÈ÷–µƒŒª÷√X
-	float _positionY;				//‘⁄µ±«∞«¯øÈ÷–µƒŒª÷√Y
+	double _positionX;				//‘⁄µ±«∞«¯øÈ÷–µƒŒª÷√X
+	double _positionY;				//‘⁄µ±«∞«¯øÈ÷–µƒŒª÷√Y
     bool _isFocused;            //是否是镜头焦点
 
 protected:

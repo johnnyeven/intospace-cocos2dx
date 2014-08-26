@@ -46,16 +46,18 @@ void SpaceStarRender::update(double delta)
 		int _x = rand() % GlobalConfig::scene_width;
 		int _y = rand() % GlobalConfig::scene_height;
 		_star->setPosition(_x, _y);
-		_star->setOpacity(255 * (1.f / (index + 1)));
+		float opacity = 255 * (1.f / (index + 1));
+		_star->setOpacity(0);
 		_layer->addChild(_star);
 		_displayContainer.pushBack(_star);
 		_deepContainer.push_back(index);
+
+		_star->runAction(FadeTo::create(.5f, opacity));
 	}
 
 	int size = _displayContainer.size();
 	for(int i = 0; i < size; ++i)
 	{
-		float percent = 1.f / (_deepContainer[i] + 1);
 		auto _layer = _container->getChildByTag(_deepContainer[i]);
 		auto _child = _displayContainer.at(i);
 		Vec2 current = _child->getPosition();
@@ -74,7 +76,14 @@ void SpaceStarRender::update(double delta)
 		}
 		else
 		{
-			_child->setPosition(current.x + (.5f * percent), current.y);
+			float percent = 1.f / (_deepContainer[i] + 1);
+			auto p = _target->getPlayer();
+			double speed = p->getVelocity() * delta;
+			double speedX = speed * cosf(p->getDirection());
+			double speedY = speed * sinf(p->getDirection());
+			float _x = current.x + (.5f * percent) - speedX;
+			float _y = current.y - speedY;
+			_child->setPosition(_x, _y);
 		}
 	}
 }

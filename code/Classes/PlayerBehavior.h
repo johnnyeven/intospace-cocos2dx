@@ -31,6 +31,9 @@ public:
     void setTarget(PlayerShip*);
     PlayerShip* getTarget();
 private:
+	void calculateVelocity(double delta);
+	void calculatePosition(float angle, double delta);
+
     PlayerShip *_target;
     Vec2* _currentDirection;
     Vec2* _targetDirection;

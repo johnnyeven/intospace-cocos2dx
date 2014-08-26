@@ -45,6 +45,8 @@ bool SpaceScene::init()
 	addChild(ship);
     
     _player = ship;
+	
+	_player->setMaxVelocity(1000.f);
     
     SceneCamera::getInstance()->focusOn(ship);
 
@@ -67,10 +69,10 @@ bool SpaceScene::onTouchBegan(Touch *touch, Event *event)
     if(_player)
     {
         Vec2 pPlayer = _player->getPosition();
-//        float angle = CC_RADIANS_TO_DEGREES(atan2f(pTouch.y - pPlayer.y, pTouch.x - pPlayer.x));
-        
         _player->setTargetDirection(pTouch.x - pPlayer.x, pTouch.y - pPlayer.y);
-//        log("%f", angle);
+		
+		_player->setAcceleration(30.f);
+		_player->setAction(ShipAction::MOVE);
     }
     return true;
 }
@@ -95,4 +97,9 @@ void SpaceScene::addRender(IRender* render)
 {
 	render->setTarget(this);
 	_renders.push_back(render);
+}
+
+PlayerShip* SpaceScene::getPlayer()
+{
+	return _player;
 }

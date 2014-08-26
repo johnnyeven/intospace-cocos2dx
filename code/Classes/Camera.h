@@ -20,8 +20,7 @@ class SceneCamera
 public:
     static SceneCamera* getInstance();
     void setStart(float x, float y);
-    Vec2& getCenter() { return _center; };
-    void setCenter(float x, float y);
+    void setCutStart(float x, float y);
     float getViewStartX();
     float getViewStartY();
     float getCutViewStartX();
@@ -37,11 +36,10 @@ private:
     
     static SceneCamera* _instance;
     
+	Vec2 _cutStart;
     Vec2 _start;
     Vec2 _prevBlock;
     Vec2 _block;
-    Vec2 _prevCenter;
-    Vec2 _center;
     Rect _cameraView;
     Rect _cameraCutView;
     double _x;

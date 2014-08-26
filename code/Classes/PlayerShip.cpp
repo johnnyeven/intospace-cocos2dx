@@ -42,7 +42,7 @@ void PlayerShip::update(double delta)
     {
         _behavior->update(delta);
     }
-    double d = getDirection();
+    double d = CC_RADIANS_TO_DEGREES(getDirection());
     if(d < 0)
     {
         d += 360;

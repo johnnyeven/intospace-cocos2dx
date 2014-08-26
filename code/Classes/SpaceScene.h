@@ -22,6 +22,7 @@ public:
     CREATE_FUNC(SpaceScene);
 
 	void addRender(IRender*);
+	PlayerShip* getPlayer();
     
 private:
     PlayerShip* _player;

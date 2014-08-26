@@ -1,5 +1,6 @@
 #include "BasicObject.h"
 #include "PZGuidMaker.h"
+#include "GlobalConfig.h"
 
 BasicObject::BasicObject(void)
 {
@@ -19,6 +20,33 @@ BasicObject::~BasicObject(void)
 const char* BasicObject::getGuid()
 {
 	return guid;
+}
+
+void BasicObject::setWorldPosition(double x, double y)
+{
+	if(x < 0)
+	{
+		--_blockX;
+		x += GlobalConfig::block_width;
+	}
+	else if(x > GlobalConfig::block_width)
+	{
+		++_blockX;
+		x -= GlobalConfig::block_width;
+	}
+	_positionX = x;
+
+	if(y < 0)
+	{
+		--_blockY;
+		y += GlobalConfig::block_height;
+	}
+	else if(y > GlobalConfig::block_height)
+	{
+		++_blockY;
+		y -= GlobalConfig::block_height;
+	}
+	_positionY = y;
 }
 
 void BasicObject::setFocused(bool value)
