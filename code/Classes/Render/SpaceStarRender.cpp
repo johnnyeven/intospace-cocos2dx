@@ -81,8 +81,8 @@ void SpaceStarRender::update(double delta)
 			double speed = p->getVelocity() * delta;
 			double speedX = speed * cosf(p->getDirection());
 			double speedY = speed * sinf(p->getDirection());
-			float _x = current.x + (.5f * percent) - speedX;
-			float _y = current.y - speedY;
+			float _x = current.x + (.5f - speedX) * percent;
+			float _y = current.y - speedY * percent;
 			_child->setPosition(_x, _y);
 		}
 	}
