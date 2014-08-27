@@ -19,8 +19,9 @@ class SceneCamera
 {
 public:
     static SceneCamera* getInstance();
-    void setStart(float x, float y);
-    void setCutStart(float x, float y);
+    void setStart(double x, double y);
+    void setBlock(int x, int y);
+    void setCutStart(double x, double y);
     float getViewStartX();
     float getViewStartY();
     float getCutViewStartX();
@@ -30,6 +31,7 @@ public:
     Rect& getCameraView();
     Rect& getCameraCutView();
     void update(double delta);
+    Vec2 getWorldPosition(double positionX, double positionY, int blockX, int blockY);
 private:
     SceneCamera(void);
     ~SceneCamera(void);
@@ -38,7 +40,7 @@ private:
     
 	Vec2 _cutStart;
     Vec2 _start;
-    Vec2 _prevBlock;
+    Vec2 _cutBlock;
     Vec2 _block;
     Rect _cameraView;
     Rect _cameraCutView;

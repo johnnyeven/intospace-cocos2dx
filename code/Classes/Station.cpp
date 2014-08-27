@@ -7,10 +7,11 @@
 //
 
 #include "Station.h"
+#include "Render/StaticRender.h"
 
 Station::Station(void):BasicObject()
 {
-    
+    setMainRender(new StaticRender());
 }
 
 Station::~Station(void)
@@ -34,6 +35,7 @@ bool Station::init()
 {
 	if(BasicObject::init())
 	{
+		setSpriteFrame(SpriteFrame::create("images/stations/space_station_blue.png", Rect(0, 0, 1024, 577)));
 		return true;
 	}
 	return false;

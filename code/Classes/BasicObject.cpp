@@ -84,3 +84,9 @@ void BasicObject::setMainRender(IRender* render)
 		_mainRender = render;
 	}
 }
+
+void BasicObject::setBlock(int x, int y)
+{
+    _blockX = x;
+    _blockY = y;
+}

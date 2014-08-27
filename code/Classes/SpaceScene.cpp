@@ -1,5 +1,6 @@
 #include "SpaceScene.h"
 #include "PlayerShip.h"
+#include "Station.h"
 #include "Camera.h"
 #include "Render/SpaceStarRender.h"
 
@@ -32,6 +33,8 @@ bool SpaceScene::init()
     listener->onTouchBegan = CC_CALLBACK_2(SpaceScene::onTouchBegan, this);
     listener->setSwallowTouches(true);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    _displayList = Vector<BasicObject*>();
 
 	//Create background
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("images/maps/A-1-2.plist");
@@ -39,9 +42,10 @@ bool SpaceScene::init()
 	bg->setAnchorPoint(Vec2(0.f, 0.f));
 	addChild(bg);
     
-    auto station = Sprite::create("images/stations/space_station_blue.png");
-    station->setAnchorPoint(Vec2(0.f, 0.f));
-    addChild(station);
+    auto s = Station::create();
+    s->setBlock(0, 0);
+    s->setWorldPosition(400, 200);
+    addDisplay(s);
 
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("attack_drone_3_1.plist");
 
@@ -83,18 +87,24 @@ bool SpaceScene::onTouchBegan(Touch *touch, Event *event)
 
 void SpaceScene::update(float delta)
 {
+    SceneCamera::getInstance()->update(delta);
+    
     if(_player)
     {
         _player->update(delta);
     }
 
 	int size = _renders.size();
-	for(int i = 0; i < size; i++)
+	for(int i = 0; i < size; ++i)
 	{
 		_renders.at(i)->update(delta);
 	}
     
-    SceneCamera::getInstance()->update(delta);
+    size = _displayList.size();
+    for(int i = 0; i < size; ++i)
+    {
+        _displayList.at(i)->update(delta);
+    }
 }
 
 void SpaceScene::addRender(IRender* render)
@@ -106,4 +116,10 @@ void SpaceScene::addRender(IRender* render)
 PlayerShip* SpaceScene::getPlayer()
 {
 	return _player;
+}
+
+void SpaceScene::addDisplay(BasicObject * obj)
+{
+    _displayList.pushBack(obj);
+    addChild(obj);
 }

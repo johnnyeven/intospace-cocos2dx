@@ -15,7 +15,7 @@ SceneCamera::SceneCamera(void)
 {
 	_cutStart = Vec2(0, 0);
     _start = Vec2(0, 0);
-    _prevBlock = Vec2(0, 0);
+    _cutBlock = Vec2(0, 0);
     _block = Vec2(0, 0);
     _cameraView = Rect(0, 0, GlobalConfig::scene_width, GlobalConfig::scene_height);
     _cameraCutView = Rect(0, 0, GlobalConfig::scene_width * 3, GlobalConfig::scene_height * 3);
@@ -60,6 +60,9 @@ void SceneCamera::update(double delta)
         return;
     }
     
+    setBlock(_focus->getBlock().x, _focus->getBlock().y);
+    setCutStart(_block.x, _block.y);
+    
     setStart(
 				_focus->getWorldPositionX() - (GlobalConfig::scene_width >> 1),
 				_focus->getWorldPositionY() - (GlobalConfig::scene_height >> 1));
@@ -81,15 +84,23 @@ void SceneCamera::update(double delta)
 						_cameraCutView.size.height);
 }
 
-void SceneCamera::setStart(float x, float y)
+void SceneCamera::setBlock(int x, int y)
+{
+    _block.x = x;
+    _block.y = y;
+}
+
+void SceneCamera::setStart(double x, double y)
 {
     if(x < 0)
     {
         _start.x = x + GlobalConfig::block_width;
+        --_block.x;
     }
     else if(x > GlobalConfig::block_width)
     {
         _start.x = x - GlobalConfig::block_width;
+        ++_block.x;
     }
     else
     {
@@ -99,10 +110,12 @@ void SceneCamera::setStart(float x, float y)
     if(y < 0)
     {
         _start.y = y + GlobalConfig::block_height;
+        --_block.y;
     }
     else if(y > GlobalConfig::block_height)
     {
         _start.y = y - GlobalConfig::block_height;
+        ++_block.y;
     }
     else
     {
@@ -110,15 +123,17 @@ void SceneCamera::setStart(float x, float y)
     }
 }
 
-void SceneCamera::setCutStart(float x, float y)
+void SceneCamera::setCutStart(double x, double y)
 {
     if(x < 0)
     {
         _cutStart.x = x + GlobalConfig::block_width;
+        --_cutBlock.x;
     }
     else if(x > GlobalConfig::block_width)
     {
         _cutStart.x = x - GlobalConfig::block_width;
+        ++_cutBlock.y;
     }
     else
     {
@@ -128,13 +143,27 @@ void SceneCamera::setCutStart(float x, float y)
     if(y < 0)
     {
         _cutStart.y = y + GlobalConfig::block_height;
+        --_cutBlock.y;
     }
     else if(y > GlobalConfig::block_height)
     {
         _cutStart.y = y - GlobalConfig::block_height;
+        ++_cutBlock.y;
     }
     else
     {
         _cutStart.y = y;
     }
+}
+
+Vec2 SceneCamera::getWorldPosition(double positionX, double positionY, int blockX, int blockY)
+{
+    double _x = positionX * blockX + (_block.x - blockX) * GlobalConfig::block_width;
+    double _y = positionY * blockY + (_block.y - blockY) * GlobalConfig::block_height;
+    double _screenX = _start.x * _block.x;
+    double _screenY = _start.y * _block.y;
+    
+    return Vec2(
+                _x - _screenX,
+                _y - _screenY);
 }

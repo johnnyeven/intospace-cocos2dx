@@ -24,9 +24,12 @@ public:
 	void addRender(IRender*);
 	PlayerShip* getPlayer();
     
+    void addDisplay(BasicObject*);
+    
 private:
     PlayerShip* _player;
 	std::vector<IRender*> _renders;
+    Vector<BasicObject*> _displayList;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
