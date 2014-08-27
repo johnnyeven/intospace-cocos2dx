@@ -10,6 +10,7 @@ BasicObject::BasicObject(void)
     _positionX = 0;
     _positionY = 0;
     _isFocused = false;
+	_renders = std::vector<IRender*>();
 }
 
 
@@ -61,5 +62,25 @@ bool BasicObject::isFocused()
 
 void BasicObject::update(double delta)
 {
-    
+	_mainRender->update(delta);
+	int size = _renders.size();
+	for(int i = 0; i < size; i++)
+	{
+		_renders.at(i)->update(delta);
+	}
+}
+
+void BasicObject::addRender(IRender* render)
+{
+	render->setTarget(this);
+	_renders.push_back(render);
+}
+
+void BasicObject::setMainRender(IRender* render)
+{
+	if(render)
+	{
+		render->setTarget(this);
+		_mainRender = render;
+	}
 }

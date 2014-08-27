@@ -1,3 +1,6 @@
+#ifndef __PLAYER_SHIP_H__
+#define __PLAYER_SHIP_H__
+
 #pragma once
 #include "cocos2d.h"
 #include "Ship.h"
@@ -20,3 +23,4 @@ private:
     PlayerBehavior *_behavior;
 };
 
+#endif

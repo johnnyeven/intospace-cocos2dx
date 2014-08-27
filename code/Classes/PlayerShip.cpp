@@ -1,12 +1,11 @@
 #include "PlayerShip.h"
 #include "PlayerBehavior.h"
+#include "Render/PlayerRender.h"
 
 PlayerShip::PlayerShip(void):Ship()
 {
-    PlayerBehavior *b = new PlayerBehavior();
-    b->setTurnSpeed(240.f);
-    b->setTarget(this);
-    _behavior = b;
+    _behavior = new PlayerBehavior();
+	setMainRender(new PlayerRender());
 }
 
 
@@ -30,6 +29,9 @@ bool PlayerShip::init()
 {
 	if(Ship::init())
 	{
+		_behavior->setTurnSpeed(240.f);
+		_behavior->setTarget(this);
+
 		setSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("attack_drone_3_1_0.png"));
 		return true;
 	}
@@ -38,17 +40,12 @@ bool PlayerShip::init()
 
 void PlayerShip::update(double delta)
 {
+	Ship::update(delta);
+
     if(_behavior)
     {
         _behavior->update(delta);
     }
-    double d = CC_RADIANS_TO_DEGREES(getDirection());
-    if(d < 0)
-    {
-        d += 360;
-    }
-    int index = d / 10;
-    setSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(StringUtils::format("attack_drone_3_1_%i.png", index)));
 }
 
 void PlayerShip::setTargetDirection(float x, float y)

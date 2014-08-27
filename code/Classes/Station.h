@@ -16,6 +16,9 @@ USING_NS_CC;
 class Station: public BasicObject
 {
 public:
+	static Station* create();
+	virtual bool init();
+private:
     Station(void);
     ~Station(void);
 };

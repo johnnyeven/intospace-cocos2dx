@@ -2,6 +2,7 @@
 #define _BASICOBJECT_H_
 
 #include "cocos2d.h"
+#include "Render/IRender.h"
 
 #pragma once
 
@@ -26,6 +27,8 @@ public:
     void setFocused(bool);
     bool isFocused();
     virtual void update(double delta);
+	void addRender(IRender*);
+	void setMainRender(IRender*);
 
 private:
 	const char* guid;
@@ -35,6 +38,9 @@ private:
 	double _positionX;				//‘⁄µ±«∞«¯øÈ÷–µƒŒª÷√X
 	double _positionY;				//‘⁄µ±«∞«¯øÈ÷–µƒŒª÷√Y
     bool _isFocused;            //是否是镜头焦点
+	
+	IRender* _mainRender;
+	std::vector<IRender*> _renders;
 
 protected:
 	BasicObject(void);
