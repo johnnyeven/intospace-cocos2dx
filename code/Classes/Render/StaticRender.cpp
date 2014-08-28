@@ -40,8 +40,8 @@ void StaticRender::update(double delta)
 	if(_target->zIndex > 0)
 	{
 		//修正视距差效果
-		float offsetX = (GlobalConfig::scene_width >> 1) - p.x;
-		float offsetY = (GlobalConfig::scene_height >> 1) - p.y;
+//		float offsetX = (GlobalConfig::scene_width >> 1) - p.x;
+//		float offsetY = (GlobalConfig::scene_height >> 1) - p.y;
 		p.x = p.x * _target->zIndex + (GlobalConfig::scene_width >> 1);
 		p.y = p.y * _target->zIndex + (GlobalConfig::scene_height >> 1);
 //		log("x=%f, y=%f", offsetX, offsetY);
