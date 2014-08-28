@@ -43,7 +43,7 @@ bool SpaceScene::init()
 	addChild(bg);
     
     auto s = Station::create();
-	s->zIndex = .1f;
+	s->zIndex = .01f;
     s->setBlock(0, 0);
     s->setWorldPosition(400, 200);
     addDisplay(s);
