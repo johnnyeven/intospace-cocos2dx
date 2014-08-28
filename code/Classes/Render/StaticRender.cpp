@@ -30,11 +30,22 @@ void StaticRender::setTarget(Node* target)
 
 void StaticRender::update(double delta)
 {
-    Vec2 p = SceneCamera::getInstance()->getWorldPosition(
+	auto camera = SceneCamera::getInstance();
+    Vec2 p = camera->getScreenPosition(
                                                           _target->getWorldPositionX(),
                                                           _target->getWorldPositionY(),
                                                           _target->getBlock().x,
                                                           _target->getBlock().y);
+
+	if(_target->zIndex > 0)
+	{
+		//修正视距差效果
+		float offsetX = (GlobalConfig::scene_width >> 1) - p.x;
+		float offsetY = (GlobalConfig::scene_height >> 1) - p.y;
+		p.x = p.x * _target->zIndex + (GlobalConfig::scene_width >> 1);
+		p.y = p.y * _target->zIndex + (GlobalConfig::scene_height >> 1);
+//		log("x=%f, y=%f", offsetX, offsetY);
+	}
+
     _target->setPosition(p);
-    log("x=%f, y=%f", p.x, p.y);
 }

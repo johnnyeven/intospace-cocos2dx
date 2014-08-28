@@ -156,14 +156,13 @@ void SceneCamera::setCutStart(double x, double y)
     }
 }
 
-Vec2 SceneCamera::getWorldPosition(double positionX, double positionY, int blockX, int blockY)
+Vec2 SceneCamera::getScreenPosition(double positionX, double positionY, int blockX, int blockY)
 {
-    double _x = positionX * blockX + (_block.x - blockX) * GlobalConfig::block_width;
-    double _y = positionY * blockY + (_block.y - blockY) * GlobalConfig::block_height;
-    double _screenX = _start.x * _block.x;
-    double _screenY = _start.y * _block.y;
-    
-    return Vec2(
-                _x - _screenX,
-                _y - _screenY);
+	double _x = positionX + abs(blockX - _block.x) * GlobalConfig::block_width;
+	double _y = positionY + abs(blockY - _block.y) * GlobalConfig::block_height;
+	double _screenX = _start.x;
+	double _screenY = _start.y;
+	return Vec2(
+				_x - _screenX,
+				_y - _screenY);
 }

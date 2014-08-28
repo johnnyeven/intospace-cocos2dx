@@ -29,7 +29,8 @@ public:
     virtual void update(double delta);
 	void addRender(IRender*);
 	void setMainRender(IRender*);
-
+	
+	float zIndex;					//层级，影响视距感
 private:
 	const char* guid;
 

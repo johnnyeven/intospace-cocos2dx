@@ -2,7 +2,7 @@
 
 SpaceStarRender::SpaceStarRender(void)
 {
-	_frame = SpriteFrame::create("stars.png", Rect(0, 0, 1, 1));
+	_frame = SpriteFrame::create("images/maps/stars.png", Rect(0, 0, 1, 1));
 	_container = Sprite::create();
 	_displayContainer = Vector<Sprite*>();
 	_deepContainer = std::vector<int>();

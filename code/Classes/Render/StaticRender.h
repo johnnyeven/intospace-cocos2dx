@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "BasicObject.h"
 #include "Camera.h"
+#include "GlobalConfig.h"
 
 USING_NS_CC;
 
