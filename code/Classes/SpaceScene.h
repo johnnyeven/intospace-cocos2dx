@@ -29,6 +29,7 @@ public:
 private:
     PlayerShip* _player;
 	std::vector<IRender*> _renders;
+    Vector<BasicObject*> _objectList;
     Vector<BasicObject*> _displayList;
 	Sprite* _bgLayer;
 	Sprite* _mainLayer;

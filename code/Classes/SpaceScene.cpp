@@ -38,6 +38,7 @@ bool SpaceScene::init()
     listener->setSwallowTouches(true);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
+    _objectList = Vector<BasicObject*>();
     _displayList = Vector<BasicObject*>();
 
 	//Create bgLayer
