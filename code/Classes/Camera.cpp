@@ -162,6 +162,7 @@ Vec2 SceneCamera::getScreenPosition(double positionX, double positionY, int bloc
 	double _y = positionY + abs(blockY - _block.y) * GlobalConfig::block_height;
 	double _screenX = _start.x;
 	double _screenY = _start.y;
+    log("x=%f, y=%f, screenX=%f, screenY=%f", _x, _y, _screenX, _screenY);
 	return Vec2(
 				_x - _screenX,
 				_y - _screenY);
