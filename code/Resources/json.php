@@ -5,6 +5,7 @@ $config = array(
 	'stations'						=>	array(
 		array(
 			'resource'				=>	'images/stations/space_station_blue.png',
+			'zIndex'				=>	0.01,
 			'blockX'				=>	1,
 			'blockY'				=>	0,
 			'positionX'				=>	10500,
