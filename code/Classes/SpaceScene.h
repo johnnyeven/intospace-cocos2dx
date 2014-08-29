@@ -21,15 +21,18 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(SpaceScene);
 
+	bool loadMap(const std::string& mapId);
 	void addRender(IRender*);
 	PlayerShip* getPlayer();
-    
     void addDisplay(BasicObject*);
     
 private:
     PlayerShip* _player;
 	std::vector<IRender*> _renders;
     Vector<BasicObject*> _displayList;
+	Sprite* _bgLayer;
+	Sprite* _mainLayer;
+	Sprite* _effectLayer;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

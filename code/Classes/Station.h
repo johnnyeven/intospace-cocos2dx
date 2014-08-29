@@ -17,7 +17,9 @@ class Station: public BasicObject
 {
 public:
 	static Station* create();
+	static Station* create(const std::string& filename);
 	virtual bool init();
+	virtual bool initWithFile(const std::string& filename);
 private:
     Station(void);
     ~Station(void);

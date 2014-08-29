@@ -31,6 +31,19 @@ Station* Station::create()
     return nullptr;
 }
 
+Station* Station::create(const std::string& filename)
+{
+	Sprite::create(filename);
+    Station* s = new (std::nothrow) Station();
+	if (s && s->initWithFile(filename))
+    {
+        s->autorelease();
+        return s;
+    }
+    CC_SAFE_DELETE(s);
+    return nullptr;
+}
+
 bool Station::init()
 {
 	if(BasicObject::init())
@@ -39,4 +52,9 @@ bool Station::init()
 		return true;
 	}
 	return false;
+}
+
+bool Station::initWithFile(const std::string& filename)
+{
+	return Sprite::initWithFile(filename);
 }

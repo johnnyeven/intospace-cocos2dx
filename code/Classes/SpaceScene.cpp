@@ -3,8 +3,12 @@
 #include "Station.h"
 #include "Camera.h"
 #include "Render/SpaceStarRender.h"
+#include "json/rapidjson.h"
+#include "json/document.h"
 
 USING_NS_CC;
+using namespace rapidjson;
+
 Scene* SpaceScene::createScene()
 {
     // 'scene' is an autorelease object
@@ -36,13 +40,25 @@ bool SpaceScene::init()
     
     _displayList = Vector<BasicObject*>();
 
+	//Create bgLayer
+	_bgLayer = Sprite::create();
+	_bgLayer->setAnchorPoint(Vec2(0, 0));
+	addChild(_bgLayer);
+
+	//Create mainLayer
+	_mainLayer = Sprite::create();
+	_mainLayer->setAnchorPoint(Vec2(0, 0));
+	addChild(_mainLayer);
+
+	//Create effectLayer
+	_effectLayer = Sprite::create();
+	_effectLayer->setAnchorPoint(Vec2(0, 0));
+	addChild(_effectLayer);
+
 	//Create background
-	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("images/maps/A-1-2.plist");
-	auto bg = Sprite::createWithSpriteFrameName("A-1-2.png");
-	bg->setAnchorPoint(Vec2(0.f, 0.f));
-	addChild(bg);
+	loadMap("config/maps/A-1-2.json");
     
-    auto s = Station::create();
+    auto s = Station::create("images/stations/space_station_blue.png");
 	s->zIndex = .01f;
     s->setBlock(0, 0);
     s->setWorldPosition(400, 200);
@@ -63,6 +79,41 @@ bool SpaceScene::init()
 	addRender(new SpaceStarRender());
 
     return true;
+}
+
+bool SpaceScene::loadMap(const std::string& mapId)
+{
+	if(mapId.size() > 0)
+	{
+		Document doc;
+		if(FileUtils::getInstance()->isFileExist(mapId))
+		{
+			std::string json = FileUtils::getInstance()->getStringFromFile(mapId);
+			doc.Parse<rapidjson::kParseDefaultFlags>(json.c_str());
+			if(!doc.HasParseError())
+			{
+				if(doc.IsObject())
+				{
+					if(doc.HasMember("mapPListFilePath") && doc.HasMember("spriteFrameName"))
+					{
+						std::string mapFilePath = doc["mapPListFilePath"].GetString();
+						std::string spriteFrameName = doc["spriteFrameName"].GetString();
+						SpriteFrameCache::getInstance()->addSpriteFramesWithFile(mapFilePath);
+						_bgLayer->setSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName));
+					}
+				}
+			}
+			else
+			{
+				log("GetParserError %s\n", doc.GetParseError());
+			}
+		}
+		else
+		{
+			log("file not exist");
+		}
+	}
+	return false;
 }
 
 void SpaceScene::onEnter()

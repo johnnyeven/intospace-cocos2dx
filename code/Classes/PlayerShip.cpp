@@ -6,6 +6,7 @@ PlayerShip::PlayerShip(void):Ship()
 {
     _behavior = new PlayerBehavior();
 	setMainRender(new PlayerRender());
+	zIndex = 1.f;
 }
 
 
