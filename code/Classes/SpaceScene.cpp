@@ -55,15 +55,10 @@ bool SpaceScene::init()
 	_effectLayer->setAnchorPoint(Vec2(0, 0));
 	addChild(_effectLayer);
 
-	//Create background
+	//Create map
 	loadMap("config/maps/A-1-2.json");
-    
-    auto s = Station::create("images/stations/space_station_blue.png");
-	s->zIndex = .01f;
-    s->setBlock(0, 0);
-    s->setWorldPosition(400, 200);
-    addDisplay(s);
 
+	//Create main Ship
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("attack_drone_3_1.plist");
 
 	auto ship = PlayerShip::create();
@@ -100,6 +95,32 @@ bool SpaceScene::loadMap(const std::string& mapId)
 						std::string spriteFrameName = doc["spriteFrameName"].GetString();
 						SpriteFrameCache::getInstance()->addSpriteFramesWithFile(mapFilePath);
 						_bgLayer->setSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName));
+					}
+					if(doc.HasMember("stations"))
+					{
+						const rapidjson::Value& stations = doc["stations"];
+						if(stations.IsArray())
+						{
+							int size = stations.Size();
+							for(int i = 0; i < size; ++i)
+							{
+								const rapidjson::Value& station = stations[i];
+								if(station.IsObject() &&
+									station.HasMember("resource") &&
+									station.HasMember("zIndex") &&
+									station.HasMember("blockX") &&
+									station.HasMember("blockY") &&
+									station.HasMember("positionX") &&
+									station.HasMember("positionY"))
+								{
+									auto s = Station::create(station["resource"].GetString());
+									s->zIndex = station["zIndex"].GetDouble();
+									s->setBlock(station["blockX"].GetInt(), station["blockY"].GetInt());
+									s->setWorldPosition(station["positionX"].GetInt(), station["positionY"].GetInt());
+									addDisplay(s);
+								}
+							}
+						}
 					}
 				}
 			}
