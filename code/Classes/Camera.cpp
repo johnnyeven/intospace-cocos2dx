@@ -19,6 +19,12 @@ SceneCamera::SceneCamera(void)
     _block = Vec2(0, 0);
     _cameraView = Rect(0, 0, GlobalConfig::scene_width, GlobalConfig::scene_height);
     _cameraCutView = Rect(0, 0, GlobalConfig::scene_width * 3, GlobalConfig::scene_height * 3);
+    _screenView = Rect(0, 0, GlobalConfig::scene_width, GlobalConfig::scene_height);
+    _screenCutView = Rect(
+                       -GlobalConfig::scene_width,
+                       -GlobalConfig::scene_height,
+                       3 * GlobalConfig::scene_width,
+                       3 * GlobalConfig::scene_height);
 }
 
 SceneCamera::~SceneCamera(void)
@@ -154,6 +160,16 @@ void SceneCamera::setCutStart(double x, double y)
     {
         _cutStart.y = y;
     }
+}
+
+Rect& SceneCamera::getCameraCutView()
+{
+    return _cameraCutView;
+}
+
+Rect& SceneCamera::getCameraView()
+{
+    return _cameraView;
 }
 
 Vec2 SceneCamera::getScreenPosition(double positionX, double positionY, int blockX, int blockY)

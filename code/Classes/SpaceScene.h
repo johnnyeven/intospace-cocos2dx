@@ -24,7 +24,11 @@ public:
 	bool loadMap(const std::string& mapId);
 	void addRender(IRender*);
 	PlayerShip* getPlayer();
+    bool isInScene(BasicObject*);
     void addDisplay(BasicObject*);
+    void removeDisplay(BasicObject*);
+    void addRenderList(BasicObject*);
+    void removeRenderList(BasicObject*);
     
 private:
     PlayerShip* _player;

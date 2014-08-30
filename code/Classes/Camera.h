@@ -24,12 +24,18 @@ public:
     void setCutStart(double x, double y);
 	float getViewStartX() { return _start.x; };
 	float getViewStartY() { return _start.y; };
+    Vec2 getStart() { return _start; };
 	float getCutViewStartX() { return _cutStart.x; };
 	float getCutViewStartY() { return _cutStart.y; };
+    Vec2 getCutViewStart() { return _cutStart; };
+    Vec2 getBlock() { return _block; };
+    Vec2 getCutBlock() { return _cutBlock; };
     void setScene(SpaceScene* scene);
     void focusOn(BasicObject *obj);
     Rect& getCameraView();
     Rect& getCameraCutView();
+    Rect& getScreenView() { return _screenView; };
+    Rect& getScreenCutView() { return _screenCutView; };
     void update(double delta);
     Vec2 getScreenPosition(double positionX, double positionY, int blockX, int blockY);
 private:
@@ -42,6 +48,8 @@ private:
     Vec2 _start;
     Vec2 _cutBlock;
     Vec2 _block;
+    Rect _screenView;
+    Rect _screenCutView;
     Rect _cameraView;
     Rect _cameraCutView;
     double _x;

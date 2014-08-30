@@ -56,9 +56,6 @@ bool SpaceScene::init()
 	_effectLayer->setAnchorPoint(Vec2(0, 0));
 	addChild(_effectLayer);
 
-	//Create map
-	loadMap("config/maps/A-1-2.json");
-
 	//Create main Ship
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("attack_drone_3_1.plist");
 
@@ -70,6 +67,10 @@ bool SpaceScene::init()
 	_player->setMaxVelocity(1000.f);
     
     SceneCamera::getInstance()->focusOn(ship);
+    SceneCamera::getInstance()->update(0);
+    
+	//Create map
+	loadMap("config/maps/A-1-2.json");
 
 	_renders = std::vector<IRender*>();
 	addRender(new SpaceStarRender());
@@ -174,10 +175,22 @@ void SpaceScene::update(float delta)
 		_renders.at(i)->update(delta);
 	}
     
-    size = _displayList.size();
+    size = _objectList.size();
     for(int i = 0; i < size; ++i)
     {
-        _displayList.at(i)->update(delta);
+        auto obj = _objectList.at(i);
+        if(isInScene(obj))
+        {
+            addRenderList(obj);
+        }
+        else
+        {
+            removeRenderList(obj);
+        }
+        if(_displayList.getIndex(obj) >= 0)
+        {
+            obj->update(delta);
+        }
     }
 }
 
@@ -192,8 +205,68 @@ PlayerShip* SpaceScene::getPlayer()
 	return _player;
 }
 
+bool SpaceScene::isInScene(BasicObject *obj)
+{
+    auto camera = SceneCamera::getInstance();
+    Rect view = camera->getScreenCutView();
+    Vec2 p = camera->getScreenPosition(
+                                       obj->getWorldPositionX(),
+                                       obj->getWorldPositionY(),
+                                       obj->getBlock().x,
+                                       obj->getBlock().y);
+    if(obj->zIndex > 0)
+    {
+        //修正视距差效果
+        p.x = p.x * obj->zIndex + (GlobalConfig::scene_width >> 1);
+        p.y = p.y * obj->zIndex + (GlobalConfig::scene_height >> 1);
+    }
+    
+    return view.containsPoint(p);
+}
+
 void SpaceScene::addDisplay(BasicObject * obj)
 {
-    _displayList.pushBack(obj);
-    addChild(obj);
+    if(_objectList.getIndex(obj) == -1)
+    {
+        _objectList.pushBack(obj);
+        
+        if(isInScene(obj))
+        {
+            addRenderList(obj);
+        }
+    }
+}
+
+void SpaceScene::removeDisplay(BasicObject *obj)
+{
+    int i = _objectList.getIndex(obj);
+    if(i >= 0)
+    {
+        Vector<BasicObject*>::iterator it = _objectList.begin() + i;
+        _objectList.erase(it);
+        
+        removeRenderList(obj);
+    }
+}
+
+void SpaceScene::addRenderList(BasicObject *obj)
+{
+    if(_displayList.getIndex(obj) == -1)
+    {
+        _displayList.pushBack(obj);
+        addChild(obj);
+        log("add into renderlist");
+    }
+}
+
+void SpaceScene::removeRenderList(BasicObject *obj)
+{
+    int i = _displayList.getIndex(obj);
+    if(i >= 0)
+    {
+        Vector<BasicObject*>::iterator it = _displayList.begin() + i;
+        _displayList.erase(it);
+        removeChild(obj);
+        log("remove from renderlist");
+    }
 }
