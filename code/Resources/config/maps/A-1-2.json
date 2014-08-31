@@ -1,1 +1,1 @@
-{"mapPListFilePath":"images\/maps\/A-1-2.plist","spriteFrameName":"A-1-2.png","stations":[{"resource":"images\/stations\/space_station_blue.png","zIndex":0.01,"blockX":2,"blockY":1,"positionX":10500,"positionY":2000}]}
+{"mapPListFilePath":"images\/maps\/A-1-2.plist","spriteFrameName":"A-1-2.png","stations":[{"resource":"images\/stations\/space_station_blue.png","zIndex":0.05,"blockX":1,"blockY":1,"positionX":10500,"positionY":2000},{"resource":"images\/maps\/star_0.png","zIndex":0.01,"blockX":0,"blockY":0,"positionX":10500,"positionY":2000}]}

@@ -60,7 +60,6 @@ bool SpaceScene::init()
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("attack_drone_3_1.plist");
 
 	auto ship = PlayerShip::create();
-	addChild(ship);
     
     _player = ship;
 	
@@ -71,6 +70,8 @@ bool SpaceScene::init()
     
 	//Create map
 	loadMap("config/maps/A-1-2.json");
+    
+	addChild(ship);
 
 	_renders = std::vector<IRender*>();
 	addRender(new SpaceStarRender());
@@ -254,7 +255,7 @@ void SpaceScene::addRenderList(BasicObject *obj)
     if(_displayList.getIndex(obj) == -1)
     {
         _displayList.pushBack(obj);
-        addChild(obj);
+        _mainLayer->addChild(obj);
         log("add into renderlist");
     }
 }
@@ -266,7 +267,7 @@ void SpaceScene::removeRenderList(BasicObject *obj)
     {
         Vector<BasicObject*>::iterator it = _displayList.begin() + i;
         _displayList.erase(it);
-        removeChild(obj);
+        _mainLayer->removeChild(obj, true);
         log("remove from renderlist");
     }
 }
