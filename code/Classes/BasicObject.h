@@ -37,10 +37,10 @@ public:
 private:
 	const char* guid;
 
-	int _blockX;				//«¯øÈX
-	int _blockY;				//«¯øÈY
-	double _positionX;				//‘⁄µ±«∞«¯øÈ÷–µƒŒª÷√X
-	double _positionY;				//‘⁄µ±«∞«¯øÈ÷–µƒŒª÷√Y
+	int _blockX;				//区块X
+	int _blockY;				//区块Y
+	double _positionX;			//世界坐标X
+	double _positionY;			//世界坐标Y
     bool _isFocused;            //是否是镜头焦点
 	
 	IRender* _mainRender;

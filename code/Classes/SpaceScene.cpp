@@ -176,8 +176,9 @@ void SpaceScene::update(float delta)
 	{
 		_renders.at(i)->update(delta);
 	}
-
-	std::sort(_displayList.begin(), _displayList.end(), std::greater<BasicObject*>());
+    
+    std::sort(_displayList.begin(), _displayList.end(), std::greater<BasicObject*>());
+    
 	size = _displayList.size();
 	while(size--)
 	{
