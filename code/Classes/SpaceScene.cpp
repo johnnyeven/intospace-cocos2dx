@@ -58,7 +58,7 @@ bool SpaceScene::init()
 	addChild(_effectLayer);
 
 	//Create main Ship
-	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("attack_drone_3_1.plist");
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("images/ships/attack_drone_3_1.plist");
 
 	auto ship = PlayerShip::create();
     

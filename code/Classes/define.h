@@ -10,4 +10,10 @@ enum ShipAction
 	MOVE
 };
 
+enum IdentifierType
+{
+	STATION,
+	PLANET
+};
+
 #endif
