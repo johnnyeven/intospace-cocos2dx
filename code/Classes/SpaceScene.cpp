@@ -57,6 +57,8 @@ bool SpaceScene::init()
 	_effectLayer->setAnchorPoint(Vec2(0, 0));
 	addChild(_effectLayer);
 
+    //Create identifier
+	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("images/identifier.plist");
 	//Create main Ship
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("images/ships/attack_drone_3_1.plist");
 
