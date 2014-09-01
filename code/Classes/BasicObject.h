@@ -29,6 +29,9 @@ public:
     virtual void update(double delta);
 	void addRender(IRender*);
 	void setMainRender(IRender*);
+
+	bool operator < (BasicObject*);
+	bool operator > (BasicObject*);
 	
 	float zIndex;					//层级，影响视距感
 private:

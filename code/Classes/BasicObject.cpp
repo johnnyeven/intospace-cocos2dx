@@ -90,3 +90,13 @@ void BasicObject::setBlock(int x, int y)
     _blockX = x;
     _blockY = y;
 }
+
+bool BasicObject::operator< (BasicObject* obj)
+{
+	return this->zIndex < obj->zIndex;
+}
+
+bool BasicObject::operator> (BasicObject* obj)
+{
+	return this->zIndex > obj->zIndex;
+}

@@ -5,6 +5,7 @@
 #include "Render/SpaceStarRender.h"
 #include "json/rapidjson.h"
 #include "json/document.h"
+#include <functional>
 
 USING_NS_CC;
 using namespace rapidjson;
@@ -174,6 +175,14 @@ void SpaceScene::update(float delta)
 	for(int i = 0; i < size; ++i)
 	{
 		_renders.at(i)->update(delta);
+	}
+
+	std::sort(_displayList.begin(), _displayList.end(), std::greater<BasicObject*>());
+	size = _displayList.size();
+	while(size--)
+	{
+		auto item = _displayList.at(size);
+		item->setLocalZOrder(size);
 	}
     
     size = _objectList.size();
