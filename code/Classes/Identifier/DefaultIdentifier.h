@@ -11,22 +11,23 @@
 USING_NS_CC;
 
 class DefaultIdentifier :
-	public IIdentifier
+	public Sprite
 {
 public:
 	DefaultIdentifier(IdentifierType);
 	virtual ~DefaultIdentifier(void);
-	virtual void update(double delta);
+	static DefaultIdentifier* create(IdentifierType);
+	virtual bool initWithSpriteFrame(SpriteFrame *pSpriteFrame);
+	virtual void update(float delta);
 
-	void setTarget(BasicObject*);
-	BasicObject* getTarget();
-	void addToTarget(BasicObject*);
+	virtual void setTarget(BasicObject*);
+	virtual BasicObject* getTarget();
 	void setType(IdentifierType);
 	IdentifierType getType();
 private:
+	Node* _container;
 	BasicObject* _target;
 	IdentifierType _type;
-	Sprite* _icon;
 };
 
 #endif

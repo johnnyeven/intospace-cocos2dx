@@ -11,6 +11,8 @@
 USING_NS_CC;
 using namespace rapidjson;
 
+SpaceScene* SpaceScene::_instance = nullptr;
+
 struct SAscendingSort
 {
 	bool operator() (BasicObject*& obj1, BasicObject*& obj2)
@@ -25,7 +27,7 @@ Scene* SpaceScene::createScene()
     auto scene = Scene::create();
     
     // 'layer' is an autorelease object
-    auto layer = SpaceScene::create();
+	auto layer = SpaceScene::getInstance();
     SceneCamera::getInstance()->setScene(layer);
 
     // add layer as a child to scene
@@ -33,6 +35,15 @@ Scene* SpaceScene::createScene()
 
     // return the scene
     return scene;
+}
+
+SpaceScene* SpaceScene::getInstance()
+{
+	if(!_instance)
+	{
+		_instance = SpaceScene::create();
+	}
+	return _instance;
 }
 
 // on "init" you need to initialize your instance
@@ -48,7 +59,7 @@ bool SpaceScene::init()
     listener->setSwallowTouches(true);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
-	_identifierList = std::vector<IIdentifier*>();
+	_identifierList = Vector<Sprite*>();
     _objectList = Vector<BasicObject*>();
     _displayList = Vector<BasicObject*>();
 
@@ -147,7 +158,7 @@ bool SpaceScene::loadMap(const std::string& mapId)
 									s->setWorldPosition(station["positionX"].GetInt(), station["positionY"].GetInt());
 									addDisplay(s);
 
-									auto id = new DefaultIdentifier(IdentifierType::STATION);
+									auto id = DefaultIdentifier::create(IdentifierType::STATION);
 									id->setTarget(s);
 									addIdentifier(id);
 								}
@@ -231,12 +242,11 @@ void SpaceScene::update(float delta)
             obj->update(delta);
         }
     }
-
+	
 	size = _identifierList.size();
-	for(int i = 0; i < size; ++i)
+    for(int i = 0; i < size; ++i)
 	{
-		auto id = _identifierList.at(i);
-		id->update(delta);
+		_identifierList.at(i)->update(delta);
 	}
 }
 
@@ -317,20 +327,22 @@ void SpaceScene::removeDisplay(BasicObject *obj)
     }
 }
 
-void SpaceScene::addIdentifier(IIdentifier* id)
+void SpaceScene::addIdentifier(Sprite* id)
 {
-	std::vector<IIdentifier*>::iterator it = std::find(_identifierList.begin(), _identifierList.end(), id);
-	if(it == _identifierList.end())
+	if(_identifierList.getIndex(id) == -1)
 	{
-		_identifierList.push_back(id);
+		_identifierList.pushBack(id);
+		_idLayer->addChild(id);
 	}
 }
 
-void SpaceScene::removeIdentifier(IIdentifier* id)
+void SpaceScene::removeIdentifier(Sprite* id)
 {
-	std::vector<IIdentifier*>::iterator it = std::find(_identifierList.begin(), _identifierList.end(), id);
-	if(it != _identifierList.end())
+	int i = _identifierList.getIndex(id);
+	if(i >= 0)
 	{
+		Vector<Sprite*>::iterator it = _identifierList.begin() + i;
 		_identifierList.erase(it);
+		_idLayer->removeChild(id);
 	}
 }
