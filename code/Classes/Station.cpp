@@ -56,5 +56,5 @@ bool Station::init()
 
 bool Station::initWithFile(const std::string& filename)
 {
-	return Sprite::initWithFile(filename);
+	return Sprite::initWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(filename));
 }

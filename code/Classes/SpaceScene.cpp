@@ -3,12 +3,21 @@
 #include "Station.h"
 #include "Camera.h"
 #include "Render/SpaceStarRender.h"
+#include "Identifier/DefaultIdentifier.h"
 #include "json/rapidjson.h"
 #include "json/document.h"
 #include <functional>
 
 USING_NS_CC;
 using namespace rapidjson;
+
+struct SAscendingSort
+{
+	bool operator() (BasicObject*& obj1, BasicObject*& obj2)
+	{
+		return obj1->zIndex < obj2->zIndex;
+	}
+};
 
 Scene* SpaceScene::createScene()
 {
@@ -39,6 +48,7 @@ bool SpaceScene::init()
     listener->setSwallowTouches(true);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
+	_identifierList = std::vector<IIdentifier*>();
     _objectList = Vector<BasicObject*>();
     _displayList = Vector<BasicObject*>();
 
@@ -48,14 +58,19 @@ bool SpaceScene::init()
 	addChild(_bgLayer);
 
 	//Create mainLayer
-	_mainLayer = Sprite::create();
+	_mainLayer = Layer::create();
 	_mainLayer->setAnchorPoint(Vec2(0, 0));
 	addChild(_mainLayer);
 
 	//Create effectLayer
-	_effectLayer = Sprite::create();
+	_effectLayer = Layer::create();
 	_effectLayer->setAnchorPoint(Vec2(0, 0));
 	addChild(_effectLayer);
+	
+	//Create idLayer
+	_idLayer = Layer::create();
+	_idLayer->setAnchorPoint(Vec2(0, 0));
+	addChild(_idLayer);
 
     //Create identifier
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("images/identifier.plist");
@@ -95,11 +110,18 @@ bool SpaceScene::loadMap(const std::string& mapId)
 			{
 				if(doc.IsObject())
 				{
-					if(doc.HasMember("mapPListFilePath") && doc.HasMember("spriteFrameName"))
+					if(doc.HasMember("mapPListFilePath") &&
+						doc.HasMember("mapSpriteFrameName") &&
+						doc.HasMember("stationPListFilePath") &&
+						doc.HasMember("starPListFilePath"))
 					{
 						std::string mapFilePath = doc["mapPListFilePath"].GetString();
-						std::string spriteFrameName = doc["spriteFrameName"].GetString();
+						std::string spriteFrameName = doc["mapSpriteFrameName"].GetString();
+						std::string stationFilePath = doc["stationPListFilePath"].GetString();
+						std::string starFilePath = doc["starPListFilePath"].GetString();
 						SpriteFrameCache::getInstance()->addSpriteFramesWithFile(mapFilePath);
+						SpriteFrameCache::getInstance()->addSpriteFramesWithFile(stationFilePath);
+						SpriteFrameCache::getInstance()->addSpriteFramesWithFile(starFilePath);
 						_bgLayer->setSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName));
 					}
 					if(doc.HasMember("stations"))
@@ -124,6 +146,10 @@ bool SpaceScene::loadMap(const std::string& mapId)
 									s->setBlock(station["blockX"].GetInt(), station["blockY"].GetInt());
 									s->setWorldPosition(station["positionX"].GetInt(), station["positionY"].GetInt());
 									addDisplay(s);
+
+									auto id = new DefaultIdentifier(IdentifierType::STATION);
+									id->setTarget(s);
+									addIdentifier(id);
 								}
 							}
 						}
@@ -179,7 +205,7 @@ void SpaceScene::update(float delta)
 		_renders.at(i)->update(delta);
 	}
     
-    std::sort(_displayList.begin(), _displayList.end(), std::greater<BasicObject*>());
+    std::sort(_displayList.begin(), _displayList.end(), SAscendingSort());
     
 	size = _displayList.size();
 	while(size--)
@@ -205,6 +231,13 @@ void SpaceScene::update(float delta)
             obj->update(delta);
         }
     }
+
+	size = _identifierList.size();
+	for(int i = 0; i < size; ++i)
+	{
+		auto id = _identifierList.at(i);
+		id->update(delta);
+	}
 }
 
 void SpaceScene::addRender(IRender* render)
@@ -237,6 +270,28 @@ bool SpaceScene::isInScene(BasicObject *obj)
     return view.containsPoint(p);
 }
 
+void SpaceScene::addRenderList(BasicObject *obj)
+{
+    if(_displayList.getIndex(obj) == -1)
+    {
+        _displayList.pushBack(obj);
+        _mainLayer->addChild(obj);
+        log("add into renderlist");
+    }
+}
+
+void SpaceScene::removeRenderList(BasicObject *obj)
+{
+    int i = _displayList.getIndex(obj);
+    if(i >= 0)
+    {
+        Vector<BasicObject*>::iterator it = _displayList.begin() + i;
+        _displayList.erase(it);
+        _mainLayer->removeChild(obj, true);
+        log("remove from renderlist");
+    }
+}
+
 void SpaceScene::addDisplay(BasicObject * obj)
 {
     if(_objectList.getIndex(obj) == -1)
@@ -262,24 +317,20 @@ void SpaceScene::removeDisplay(BasicObject *obj)
     }
 }
 
-void SpaceScene::addRenderList(BasicObject *obj)
+void SpaceScene::addIdentifier(IIdentifier* id)
 {
-    if(_displayList.getIndex(obj) == -1)
-    {
-        _displayList.pushBack(obj);
-        _mainLayer->addChild(obj);
-        log("add into renderlist");
-    }
+	std::vector<IIdentifier*>::iterator it = std::find(_identifierList.begin(), _identifierList.end(), id);
+	if(it == _identifierList.end())
+	{
+		_identifierList.push_back(id);
+	}
 }
 
-void SpaceScene::removeRenderList(BasicObject *obj)
+void SpaceScene::removeIdentifier(IIdentifier* id)
 {
-    int i = _displayList.getIndex(obj);
-    if(i >= 0)
-    {
-        Vector<BasicObject*>::iterator it = _displayList.begin() + i;
-        _displayList.erase(it);
-        _mainLayer->removeChild(obj, true);
-        log("remove from renderlist");
-    }
+	std::vector<IIdentifier*>::iterator it = std::find(_identifierList.begin(), _identifierList.end(), id);
+	if(it != _identifierList.end())
+	{
+		_identifierList.erase(it);
+	}
 }

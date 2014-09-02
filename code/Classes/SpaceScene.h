@@ -5,6 +5,7 @@
 #include "BasicObject.h"
 #include "PlayerShip.h"
 #include "Render/IRender.h"
+#include "Identifier/IIdentifier.h"
 
 class SpaceScene : public cocos2d::Layer
 {
@@ -25,19 +26,23 @@ public:
 	void addRender(IRender*);
 	PlayerShip* getPlayer();
     bool isInScene(BasicObject*);
-    void addDisplay(BasicObject*);
-    void removeDisplay(BasicObject*);
     void addRenderList(BasicObject*);
     void removeRenderList(BasicObject*);
+    void addDisplay(BasicObject*);
+    void removeDisplay(BasicObject*);
+	void addIdentifier(IIdentifier*);
+	void removeIdentifier(IIdentifier*);
     
 private:
     PlayerShip* _player;
 	std::vector<IRender*> _renders;
+	std::vector<IIdentifier*> _identifierList;
     Vector<BasicObject*> _objectList;
     Vector<BasicObject*> _displayList;
 	Sprite* _bgLayer;
-	Sprite* _mainLayer;
-	Sprite* _effectLayer;
+	Layer* _mainLayer;
+	Layer* _effectLayer;
+	Layer* _idLayer;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

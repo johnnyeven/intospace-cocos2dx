@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<SceneProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectDir>E:\cocos2dx\IntoSpace\builder\IntoSpace\CocosStudio\ccsprojs\SpaceScene</ProjectDir>
+  <Version>1.6.0.0</Version>
+  <Resources>E:\cocos2dx\IntoSpace\builder\IntoSpace</Resources>
+  <Name>SpaceScene</Name>
+  <JsonFileName>SpaceScene.json</JsonFileName>
+  <JsonFolder>E:\cocos2dx\IntoSpace\builder\IntoSpace\CocosStudio\assets\publish</JsonFolder>
+  <JsonList />
+  <CanvasSize>
+    <Width>960</Width>
+    <Height>640</Height>
+  </CanvasSize>
+  <filePath>E:\cocos2dx\IntoSpace\builder\IntoSpace\CocosStudio\ccsprojs\SpaceScene\SpaceScene.xml.scene</filePath>
+  <ProjectType>SceneProject</ProjectType>
+  <ResRelativePath>\\..\\..\\assets</ResRelativePath>
+  <JSFileList />
+  <DefaultUI_JSList />
+  <Res>E:\cocos2dx\IntoSpace\builder\IntoSpace\CocosStudio\assets</Res>
+</SceneProject>

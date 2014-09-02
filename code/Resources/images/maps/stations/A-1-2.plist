@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>frames</key>
+        <dict>
+            <key>space_station_blue.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,2},{1022,574}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{0,1},{1022,574}}</string>
+                <key>sourceSize</key>
+                <string>{1022,576}</string>
+            </dict>
+        </dict>
+        <key>metadata</key>
+        <dict>
+            <key>format</key>
+            <integer>2</integer>
+            <key>realTextureFileName</key>
+            <string>A-1-2.pvr.gz</string>
+            <key>size</key>
+            <string>{1024,2048}</string>
+            <key>smartupdate</key>
+            <string>$TexturePacker:SmartUpdate:baaf391f31a4f5ad05f50a6480f86ae7:1af7022e7fa20b27a174979908f77eca:15c4e01b52ce8756e9a4a044bebed815$</string>
+            <key>textureFileName</key>
+            <string>A-1-2.pvr.gz</string>
+        </dict>
+    </dict>
+</plist>

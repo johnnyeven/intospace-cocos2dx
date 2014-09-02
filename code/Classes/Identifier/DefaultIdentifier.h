@@ -5,6 +5,7 @@
 #include "IIdentifier.h"
 #include "cocos2d.h"
 #include "BasicObject.h"
+#include "Camera.h"
 #include "define.h"
 
 USING_NS_CC;
@@ -13,12 +14,13 @@ class DefaultIdentifier :
 	public IIdentifier
 {
 public:
-	DefaultIdentifier(void);
+	DefaultIdentifier(IdentifierType);
 	virtual ~DefaultIdentifier(void);
 	virtual void update(double delta);
 
 	void setTarget(BasicObject*);
 	BasicObject* getTarget();
+	void addToTarget(BasicObject*);
 	void setType(IdentifierType);
 	IdentifierType getType();
 private:
