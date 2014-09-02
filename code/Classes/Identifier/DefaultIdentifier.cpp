@@ -31,15 +31,15 @@ void DefaultIdentifier::update(float delta)
 	Rect view = camera->getScreenView();
 	if(_target)
 	{
-		if(view.containsPoint(_target->getPosition()))
-		{
-			setPosition(_target->getPosition());
-		}
-		else
-		{
-
-		}
+		setPosition(_target->getPosition());
 	}
+}
+
+void DefaultIdentifier::setPosition(const Vec2& pos)
+{
+	Sprite::setPosition(Vec2(
+		std::max(0.f, std::min((float)GlobalConfig::scene_width, pos.x)),
+		std::max(0.f, std::min((float)GlobalConfig::scene_height, pos.y))));
 }
 
 void DefaultIdentifier::setTarget(BasicObject* obj)

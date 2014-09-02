@@ -6,6 +6,7 @@
 #include "cocos2d.h"
 #include "BasicObject.h"
 #include "Camera.h"
+#include "GlobalConfig.h"
 #include "define.h"
 
 USING_NS_CC;
@@ -20,6 +21,7 @@ public:
 	virtual bool initWithSpriteFrame(SpriteFrame *pSpriteFrame);
 	virtual void update(float delta);
 
+	virtual void setPosition(const Vec2& pos) override;
 	virtual void setTarget(BasicObject*);
 	virtual BasicObject* getTarget();
 	void setType(IdentifierType);
