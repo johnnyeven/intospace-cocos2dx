@@ -237,10 +237,10 @@ void SpaceScene::update(float delta)
         {
             removeRenderList(obj);
         }
-        if(_displayList.getIndex(obj) >= 0)
-        {
+//        if(_displayList.getIndex(obj) >= 0)
+//        {
             obj->update(delta);
-        }
+//        }
     }
 	
 	size = _identifierList.size();

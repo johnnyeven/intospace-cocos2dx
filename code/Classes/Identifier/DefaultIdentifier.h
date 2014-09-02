@@ -2,7 +2,6 @@
 #define _DEFAULT_IDENTIFIER_H_
 
 #pragma once
-#include "IIdentifier.h"
 #include "cocos2d.h"
 #include "BasicObject.h"
 #include "Camera.h"

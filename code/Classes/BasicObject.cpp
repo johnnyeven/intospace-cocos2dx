@@ -91,12 +91,12 @@ void BasicObject::setBlock(int x, int y)
     _blockY = y;
 }
 
-bool BasicObject::operator< (BasicObject* obj)
+void BasicObject::setIsRemain(bool value)
 {
-	return this->zIndex < obj->zIndex;
+    _isRemain = value;
 }
 
-bool BasicObject::operator> (BasicObject* obj)
+bool BasicObject::isRemain()
 {
-	return this->zIndex > obj->zIndex;
+    return _isRemain;
 }

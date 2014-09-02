@@ -29,9 +29,8 @@ public:
     virtual void update(double delta);
 	void addRender(IRender*);
 	void setMainRender(IRender*);
-
-	bool operator < (BasicObject*);
-	bool operator > (BasicObject*);
+    void setIsRemain(bool);
+    bool isRemain();
 	
 	float zIndex;					//层级，影响视距感
 private:
@@ -42,6 +41,7 @@ private:
 	double _positionX;			//世界坐标X
 	double _positionY;			//世界坐标Y
     bool _isFocused;            //是否是镜头焦点
+    bool _isRemain;             //是否一直保留
 	
 	IRender* _mainRender;
 	std::vector<IRender*> _renders;
