@@ -22,7 +22,14 @@ DefaultIdentifier* DefaultIdentifier::create(IdentifierType type)
 
 bool DefaultIdentifier::initWithSpriteFrame(SpriteFrame *pSpriteFrame)
 {
-	return Sprite::initWithSpriteFrame(pSpriteFrame);
+	bool result = Sprite::initWithSpriteFrame(pSpriteFrame);
+//	TTFConfig config("fonts/Marker Felt.ttf", 14);
+//	_info = Label::createWithTTF(config, "0 m", TextHAlignment::CENTER);
+	_info = Label::create("0 m", "Arial", 14);
+	Size s = getContentSize();
+	_info->setPosition(s.width / 2, -s.height / 2);
+	addChild(_info);
+	return result;
 }
 
 void DefaultIdentifier::update(float delta)
@@ -33,6 +40,9 @@ void DefaultIdentifier::update(float delta)
 	{
 		setPosition(_target->getPosition());
 	}
+	Vec2 b = _target->getBlock();
+	unsigned long long d = PlayerShip::getInstance()->getDistance(_target);
+	_info->setString(SpaceUtils::humanReadableDistance(d));
 }
 
 void DefaultIdentifier::setPosition(const Vec2& pos)

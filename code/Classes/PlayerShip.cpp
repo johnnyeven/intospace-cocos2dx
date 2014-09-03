@@ -2,6 +2,8 @@
 #include "PlayerBehavior.h"
 #include "Render/PlayerRender.h"
 
+PlayerShip* PlayerShip::_instance = nullptr;
+
 PlayerShip::PlayerShip(void):Ship()
 {
     _behavior = new PlayerBehavior();
@@ -24,6 +26,15 @@ PlayerShip* PlayerShip::create()
     }
     CC_SAFE_DELETE(s);
     return nullptr;
+}
+
+PlayerShip* PlayerShip::getInstance()
+{
+	if(!_instance)
+	{
+		_instance = create();
+	}
+	return _instance;
 }
 
 bool PlayerShip::init()
@@ -52,4 +63,13 @@ void PlayerShip::update(double delta)
 void PlayerShip::setTargetDirection(float x, float y)
 {
     _behavior->setTargetDirection(x, y);
+}
+
+unsigned long long PlayerShip::getDistance(BasicObject* target)
+{
+	Vec2 targetBlock = target->getBlock();
+	Vec2 playerBlock = getBlock();
+	double _x = target->getWorldPositionX() + (targetBlock.x - playerBlock.x) * GlobalConfig::block_width - getWorldPositionX();
+	double _y = target->getWorldPositionY() + (targetBlock.y - playerBlock.y) * GlobalConfig::block_height - getWorldPositionY();
+	return unsigned long long(sqrt(_x * _x + _y * _y));
 }

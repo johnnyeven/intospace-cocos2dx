@@ -88,7 +88,7 @@ bool SpaceScene::init()
 	//Create main Ship
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("images/ships/attack_drone_3_1.plist");
 
-	auto ship = PlayerShip::create();
+	auto ship = PlayerShip::getInstance();
     
     _player = ship;
 	
@@ -297,7 +297,7 @@ void SpaceScene::removeRenderList(BasicObject *obj)
     {
         Vector<BasicObject*>::iterator it = _displayList.begin() + i;
         _displayList.erase(it);
-        _mainLayer->removeChild(obj, true);
+        _mainLayer->removeChild(obj, false);
         log("remove from renderlist");
     }
 }

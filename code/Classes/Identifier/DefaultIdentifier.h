@@ -6,7 +6,9 @@
 #include "BasicObject.h"
 #include "Camera.h"
 #include "GlobalConfig.h"
+#include "PlayerShip.h"
 #include "define.h"
+#include "Utilities/SpaceUtils.h"
 
 USING_NS_CC;
 
@@ -29,6 +31,7 @@ private:
 	Node* _container;
 	BasicObject* _target;
 	IdentifierType _type;
+	Label* _info;
 };
 
 #endif
