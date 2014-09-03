@@ -23,9 +23,8 @@ DefaultIdentifier* DefaultIdentifier::create(IdentifierType type)
 bool DefaultIdentifier::initWithSpriteFrame(SpriteFrame *pSpriteFrame)
 {
 	bool result = Sprite::initWithSpriteFrame(pSpriteFrame);
-//	TTFConfig config("fonts/Marker Felt.ttf", 14);
-//	_info = Label::createWithTTF(config, "0 m", TextHAlignment::CENTER);
-	_info = Label::create("0 m", "Arial", 14);
+	TTFConfig config("fonts/arial.ttf", 14);
+	_info = Label::createWithTTF(config, "0 m", TextHAlignment::CENTER);
 	Size s = getContentSize();
 	_info->setPosition(s.width / 2, -s.height / 2);
 	addChild(_info);
