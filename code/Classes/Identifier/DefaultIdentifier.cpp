@@ -25,8 +25,8 @@ bool DefaultIdentifier::initWithSpriteFrame(SpriteFrame *pSpriteFrame)
 	bool result = Sprite::initWithSpriteFrame(pSpriteFrame);
 	TTFConfig config("fonts/arial.ttf", 14);
 	_info = Label::createWithTTF(config, "0 m", TextHAlignment::CENTER);
-	Size s = getContentSize();
-	_info->setPosition(s.width / 2, -s.height / 2);
+	originalSize = getContentSize();
+	_info->setPosition(originalSize.width / 2, -originalSize.height / 2);
 	addChild(_info);
 	return result;
 }
@@ -39,6 +39,32 @@ void DefaultIdentifier::update(float delta)
 	{
 		setPosition(_target->getPosition());
 	}
+
+	Vec2 p = getPosition();
+	Size s = _info->getContentSize();
+	Vec2 p2 = _info->getPosition();
+	if(p.y < originalSize.height / 2 + s.height)
+	{
+		p2.y = originalSize.height + s.height / 2;
+	}
+	else
+	{
+		p2.y = -originalSize.height / 2;
+	}
+	if(p.x < s.width / 2)
+	{
+		p2.x = s.width / 2;
+	}
+	else if(p.x > GlobalConfig::scene_width - s.width / 2)
+	{
+		p2.x = -s.width / 2;
+	}
+	else
+	{
+		p2.x = originalSize.width / 2;
+	}
+	_info->setPosition(p2);
+
 	Vec2 b = _target->getBlock();
 	unsigned long long d = PlayerShip::getInstance()->getDistance(_target);
 	_info->setString(SpaceUtils::humanReadableDistance(d));

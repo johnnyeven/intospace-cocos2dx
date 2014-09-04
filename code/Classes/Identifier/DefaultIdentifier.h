@@ -32,6 +32,7 @@ private:
 	BasicObject* _target;
 	IdentifierType _type;
 	Label* _info;
+	Size originalSize;
 };
 
 #endif
